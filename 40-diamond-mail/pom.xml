@@ -2,14 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>diamond-mail</artifactId>
+	<artifactId>40-diamond-mail</artifactId>
 	<packaging>jar</packaging>
 
 	<parent>
 		<groupId>org.si.diamond</groupId>
-		<artifactId>diamond-parent</artifactId>
+		<artifactId>00-diamond-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../diamond-parent</relativePath>
+		<relativePath>../00-diamond-parent</relativePath>
 	</parent>
 	
 	<dependencies>
@@ -27,7 +27,7 @@
 		
 		<dependency>
 			<groupId>org.si.diamond</groupId>
-			<artifactId>diamond-base</artifactId>
+			<artifactId>10-diamond-base</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

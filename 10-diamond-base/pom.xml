@@ -5,15 +5,15 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>diamond-base</artifactId>
+	<artifactId>10-diamond-base</artifactId>
 	<packaging>jar</packaging>
-	<name>diamond-base</name>
+	<name>10-diamond-base</name>
 
 	<parent>
 		<groupId>org.si.diamond</groupId>
-		<artifactId>diamond-parent</artifactId>
+		<artifactId>00-diamond-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../diamond-parent</relativePath>
+		<relativePath>../00-diamond-parent</relativePath>
 	</parent>
 
 	<properties>

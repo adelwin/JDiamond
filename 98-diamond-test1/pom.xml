@@ -5,9 +5,9 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>30-diamond-task</artifactId>
+	<artifactId>98-diamond-test1</artifactId>
 	<packaging>jar</packaging>
-	<name>30-diamond-task</name>
+	<name>98-diamond-test1</name>
 
 	<parent>
 		<groupId>org.si.diamond</groupId>
@@ -19,6 +19,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.si.diamond</groupId>
