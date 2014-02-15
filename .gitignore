@@ -2,3 +2,5 @@
 .metadata/*
 
 */target/classes/*
+
+*.DS_Store
