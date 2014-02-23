@@ -1,10 +1,8 @@
 
 .metadata/*
-
+98*/*
 RemoteSystemsTempFiles/*
-
 */target
-
 *.DS_Store
 
 
