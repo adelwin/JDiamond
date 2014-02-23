@@ -1,0 +1,61 @@
+I.		DATABASE COMMON RULES
+	1.	each table is named with camel case
+	2.	each table is named as plural objects
+	3.	9 common fields required for each table is:
+		a.	Attr1		varchar(255)	allow null
+		b.	Attr2		varchar(255)	allow null
+		c.	Attr3		varchar(255)	allow null
+		d.	Attr4		varchar(255)	allow null
+		e.	CreateBy	varchar(32)		not null	a foreign key to table users but doesnot implement table relationships
+		f.	CreateDate	datetime		not null
+		g.	UpdateBy	varchar(255)	allow null	a foreign key to table users but doesnot implement table relationships
+		h.	UpdateDate	datetime		allow null
+		i.	status		varchar(32)		not null	a foreign key to table lookup with lookup type 'RECORD_STAT'
+	4.	a key fields should be varchar(32) since the 32-digit-number-sequence will be generated using General Unique ID (GUID)
+		all other free text fields should be either varchar(255) or numeric or datetime
+	5.	a flag fields should be treated as foreign key fields since the flag is retrieved from lookup table
+	6.	must implement indexing on each table on every primary key and foreign key
+II.		MODEL COMMON RULES
+	1.	extends CommonModel to support implementation of audit trail
+	2.	consist of fully quallified getters and setters method
+	3.	can be made easy by using the SqlMapGenerator supplied by the framework
+III.	DAO COMMON RULES
+	1.	dao only process the native database actions (Select, Insert, Update, Delete)
+	2.	the delete method of the dao actually deletes the record (phisical delete)
+	3.	the only extra feature implemented in the DAO is audit trail
+	4.	all Dao classes should :
+		have an interface to support bean proxying by spring
+		extends BaseDaoImpl and implements each of their own interface
+		should override all the protected methods in the baseDao
+		if the call is generic then the method should also be overriden and the overriden method should be called 
+		within the declaration
+	5.	the method naming should follow these rules
+		a.	method names are camel cased
+		b.	should contain the table or the module name (ex:insert method should be overriden as insertUser)
+	6.	the sql map only have one result map and one param map since ibatis is only implemented for native database actions
+	7.	made easy by using SqlMapGenerator supplied by the framework
+	8.	Dao(s) should return native objects if able, if not, 
+		limit to generic classes since no business logic should be implemented here
+IV.		PROCESS COMMON RULES
+	1.	Process only handles the business logic, should not be aware of the process behind it all, such as collecting the data,
+		storing the data, or filtering the data
+	2.	by default all process objects should returns PackageResponse and only accepts a single argument
+		PackageRequest, the class package request must be implemented when accessing a business process classes too
+	3.	to support backward compability the process classes should also provide a generic method with generic method params (LoginContext, CriteriaModel)
+		but these method should be marked deprecated
+	4.	this pattern is implemented to support advance logging and method-based authentication where the login context is used to verify if the user has an access for the method called
+		the authentication will be handled with an Sprint Interceptor
+	5.	TODO: find out how a method can define each of their own authentication index, but still callable by Spring's Interceptor
+		the Spring Interceptor will retrieve the index and check with the login context inside the packace request model used to call the method
+		will throw a ProcessAuthenticationException extended from GenericProcessException stating that the method call is invalid
+V.		PAGE COMMON RULES
+VI.		LOOKUP COMMON RULES
+VIII.	FRAMEWORK RULES
+IX.		NOTES
+		- seperate interceptor for dao and for process
+			interceptor for dao can only intercept dao methods which is plain (POJO-Plain Old Java Object)
+			interceptor for business process classes is more complicated since it must logs all that can be logged
+			when accessing a business process class method, such as login context, params, result, exception thrown, time,
+			messages, etc, should add on system.xml to implement double nterceptor
+		- add extract state objects map in request util
+		- inherit base state tag to create a series of state aware web objects
