@@ -14,6 +14,20 @@ import org.si.diamond.base.dao.IBaseDao;
 import org.si.diamond.base.exception.BaseDaoException;
 import org.si.diamond.base.model.BaseModel;
 
+/**
+ * a base class for every Data Access Object used in this framework
+ * there is no need to implement this DAO object for every type of base model being used since generics is being used here
+ * implement to use by doing as such
+ * <code>
+ * IBaseDao<String, UserModel> userDao = new BaseDaoImpl<String, UserModel>();
+ * </code>
+ * 
+ * @author adelwin
+ *
+ * @param <ID> type of the primary key of the base model class being used to implement this base dao
+ * @param <M> base model class being used to implement this dao
+ */
+
 public class BaseDaoImpl<ID extends Serializable, M extends BaseModel> extends SqlSessionDaoSupport implements IBaseDao<ID, M> {
 	protected Logger logger = Logger.getLogger(BaseDaoImpl.class);
 	protected Class<? extends BaseModel> modelClass;

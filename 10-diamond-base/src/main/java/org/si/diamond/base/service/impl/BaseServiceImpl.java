@@ -6,9 +6,14 @@
 package org.si.diamond.base.service.impl;
 
 import org.apache.log4j.Logger;
+import org.si.diamond.base.context.LoginContext;
+import org.si.diamond.base.model.CommonModel;
 
 public class BaseServiceImpl {
 	
 	protected Logger logger = Logger.getLogger(BaseServiceImpl.class);
-
+	
+	protected void setCommonAttributes(LoginContext loginCtx, CommonModel model) {
+		
+	}
 }
