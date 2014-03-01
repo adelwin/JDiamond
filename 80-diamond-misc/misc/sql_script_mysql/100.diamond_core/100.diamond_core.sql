@@ -5,3 +5,4 @@ USE DIAMOND;
 130.diamond_core_users.sql
 140.diamond_core_user_roles.sql
 150.diamond_core_passwords.sql
+160.diamond_core_mail.sql
