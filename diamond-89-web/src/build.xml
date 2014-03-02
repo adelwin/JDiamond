@@ -63,10 +63,12 @@
 			<fileset file="${j-diamond-web.base}">
 			</fileset>
 		</copy>
+
 		<copy todir="${j-diamond-web.dir.dist.lib}">
 			<fileset file="${j-diamond-web.task}">
 			</fileset>
 		</copy>
+		
 		<copy todir="${j-diamond-web.dir.dist.lib}">
 			<fileset file="${j-diamond-web.mail}">
 			</fileset>

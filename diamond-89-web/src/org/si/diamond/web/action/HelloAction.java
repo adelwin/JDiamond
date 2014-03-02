@@ -11,9 +11,13 @@
  */
 package org.si.diamond.web.action;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.si.diamond.base.action.BaseAction;
 import org.si.diamond.base.exception.BaseActionException;
+import org.si.diamond.base.exception.BaseServiceException;
+import org.si.diamond.web.model.LookupModel;
 import org.si.diamond.web.service.ILookupService;
 
 /**
@@ -38,6 +42,11 @@ public class HelloAction extends BaseAction {
 	public String action() throws BaseActionException {
 		try {
 			logger.debug("on action method of hello action");
+			List<LookupModel> lookups = lookupService.getLookupByType("");
+			logger.error(lookups);
+		} catch (BaseServiceException e) {
+			logger.error(e.getMessage(), e);
+			throw new BaseActionException(e.getMessage(), e);
 		} finally {
 		}
 		return SUCCESS;
