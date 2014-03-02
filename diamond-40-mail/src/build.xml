@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== -->
+<!-- Revision History														-->
+<!-- Author          Revision Date  Revision Description                    -->
+<!-- =============== ============== ========================================-->
+<!-- Adelwin Handoyo Nov 13, 2013   Initial draft                           -->
+<!--                                                                        -->
+
+<project name = "JDiamond-40-Mail" default = "build" basedir = "../">
+	<property name="j-diamond-mail.version"			value="1.0"/>
+	<property name="j-diamond-mail.dir.base"		value="${basedir}"/>
+	<property name="j-diamond-mail.dir.src"			value="${j-diamond-mail.dir.base}/src"/>
+	<property name="j-diamond-mail.dir.lib"			value="${j-diamond-mail.dir.base}/lib"/>
+	<property name="j-diamond-mail.dir.bin"			value="${j-diamond-mail.dir.base}/bin"/>
+	<property name="j-diamond-mail.dir.dist"		value="${j-diamond-mail.dir.base}/dist"/>
+	<property name="j-diamond-mail.dir.dist.lib"	value="${j-diamond-mail.dir.base}/dist/lib"/>
+	<property name="j-diamond-mail.dist.filename"	value="j-diamond-mail-${j-diamond-mail.version}"/>
+	<property name="j-diamond-mail.lib.log4j"		value="${j-diamond-mail.dir.lib}/log4j-1.2.17.jar"/>
+	<property name="j-diamond-mail.lib.mail"		value="${j-diamond-mail.dir.lib}/mail-1.4.1.jar"/>
+	<property name="j-diamond-mail.lib.classpath"	value="${j-diamond-mail.lib.log4j}:${j-diamond-mail.lib.mail}"/>
+	
+	<target name="info" description="to print out all property value">
+		<echo message="Property Info.."/>
+		<echo message="j-diamond-mail.dir.base      :: ${j-diamond-mail.dir.base}"/>
+		<echo message="j-diamond-mail.dir.src       :: ${j-diamond-mail.dir.src}"/>
+		<echo message="j-diamond-mail.dir.lib       :: ${j-diamond-mail.dir.lib}"/>
+		<echo message="j-diamond-mail.dir.bin       :: ${j-diamond-mail.dir.bin}"/>
+		<echo message="j-diamond-mail.dist.filename :: ${j-diamond-mail.dist.filename}"/>
+		<echo message="j-diamond-mail.lib.classpath :: ${j-diamond-mail.lib.classpath}"/>
+	</target>
+	
+	<target name="init" description="to create necessary directory" depends="info">
+		<delete dir="${j-diamond-mail.dir.dist}"/>
+		<mkdir dir="${j-diamond-mail.dir.dist}"/>
+		<mkdir dir="${j-diamond-mail.dir.dist.lib}"/>
+	</target>
+	
+	<target name="compile" description="compile java artifact" depends="init">
+		<echo message="compiling starts"/>
+		<tstamp>
+			<format property="timestamp.compile.start" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+		</tstamp>
+		<echo message="${timestamp.compile.start}"/>
+		<javac srcdir="${j-diamond-mail.dir.src}"
+				destdir="${j-diamond-mail.dir.bin}"
+				classpath="${j-diamond-mail.lib.classpath}"
+				fork="true"
+				debug="true"
+				debuglevel="lines,vars,source">
+		</javac>
+		<echo message="compiling completed"/>
+		<jar destfile="${j-diamond-mail.dir.dist.lib}/${j-diamond-mail.dist.filename}.jar">
+			<fileset dir="${j-diamond-mail.dir.bin}"/>
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Package-Time" value="${timestamp.package.start}"/>
+				<attribute name="Version" value="${j-diamond-mail.version}"/>
+			</manifest>
+		</jar>
+		<tstamp>
+			<format property="timestamp.compile.complete" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+		</tstamp>
+		<echo message="${timestamp.compile.complete}"/>
+	</target>
+	
+	<target name="package" description="to create packaged archive(jar)" depends="compile">
+		<echo message="Packaging Starts.."/>
+		<tstamp>
+			<format property="timestamp.package.start" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+			<format property="timestamp.package.filesuffix" pattern="yyyyMMdd-hhmmss"/>
+		</tstamp>
+		<echo message="${timestamp.package.start}"/>
+
+		<copy todir="${j-diamond-mail.dir.dist.lib}">
+			<fileset dir="${j-diamond-mail.dir.lib}"/>
+		</copy>
+
+		<echo message="Packaging Completed"/>
+		<tstamp>
+			<format property="timestamp.package.complete" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+		</tstamp>
+		<echo message="${timestamp.package.complete}"/>
+	</target>
+	
+	<target name="cleanup" description="to remove all transient dir" depends="package">
+		<echo message="removing bin directory"/>
+		<delete dir="${j-diamond-mail.dir.bin}"/>
+	</target>
+	
+	<target name="build" description="act as an anchor target only" depends="package">
+		<echo message="build complete!"/>
+	</target>
+</project>

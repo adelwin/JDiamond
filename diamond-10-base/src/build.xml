@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== -->
+<!-- Revision History														-->
+<!-- Author          Revision Date  Revision Description                    -->
+<!-- =============== ============== ========================================-->
+<!-- Adelwin Handoyo Nov 13, 2013   Initial draft                           -->
+<!--                                                                        -->
+
+<project name = "JDiamond-10-Base" default = "build" basedir = "../">
+	<property name="j-diamond-base.version"			value="1.0"/>
+	<property name="j-diamond-base.dir.base"		value="${basedir}"/>
+	<property name="j-diamond-base.dir.src"			value="${j-diamond-base.dir.base}/src"/>
+	<property name="j-diamond-base.dir.lib"			value="${j-diamond-base.dir.base}/lib"/>
+	<property name="j-diamond-base.dir.bin"			value="${j-diamond-base.dir.base}/bin"/>
+	<property name="j-diamond-base.dir.dist"		value="${j-diamond-base.dir.base}/dist"/>
+	<property name="j-diamond-base.dir.dist.lib"	value="${j-diamond-base.dir.base}/dist/lib"/>
+	<property name="j-diamond-base.dist.filename"	value="j-diamond-base-${j-diamond-base.version}"/>
+	<property name="j-diamond-base.lib.spring"		value="${j-diamond-base.dir.lib}/spring-core-3.0.5.RELEASE.jar:${j-diamond-base.dir.lib}/spring-beans-3.0.5.RELEASE.jar:${j-diamond-base.dir.lib}/spring-context-3.0.5.RELEASE.jar:${j-diamond-base.dir.lib}/spring-jdbc-3.0.5.RELEASE.jar:${j-diamond-base.dir.lib}/spring-tx-3.0.5.RELEASE.jar"/>
+	<property name="j-diamond-base.lib.commons"		value="${j-diamond-base.dir.lib}/commons-codec-1.9.jar"/>
+	<property name="j-diamond-base.lib.log4j"		value="${j-diamond-base.dir.lib}/log4j-1.2.17.jar"/>
+	<property name="j-diamond-base.lib.servlet"		value="${j-diamond-base.dir.lib}/servlet-api-2.5.jar"/>
+	<property name="j-diamond-base.lib.mybatis"		value="${j-diamond-base.dir.lib}/mybatis-3.0.4.jar:${j-diamond-base.dir.lib}/mybatis-spring-1.0.0-RC3.jar"/>
+	<property name="j-diamond-base.lib.struts"		value="${j-diamond-base.dir.lib}/struts2-core-2.2.1.jar:${j-diamond-base.dir.lib}/xwork-core-2.2.1.jar"/>
+	<property name="j-diamond-base.lib.classpath"	value="${j-diamond-base.lib.commons}:${j-diamond-base.lib.spring}:${j-diamond-base.lib.log4j}:${j-diamond-base.lib.servlet}:${j-diamond-base.lib.mybatis}:${j-diamond-base.lib.struts}"/>
+	
+	<target name="info" description="to print out all property value">
+		<echo message="Property Info.."/>
+		<echo message="j-diamond-base.dir.base      :: ${j-diamond-base.dir.base}"/>
+		<echo message="j-diamond-base.dir.src       :: ${j-diamond-base.dir.src}"/>
+		<echo message="j-diamond-base.dir.lib       :: ${j-diamond-base.dir.lib}"/>
+		<echo message="j-diamond-base.dir.bin       :: ${j-diamond-base.dir.bin}"/>
+		<echo message="j-diamond-base.dist.filename :: ${j-diamond-base.dist.filename}"/>
+		<echo message="j-diamond-base.lib.classpath :: ${j-diamond-base.lib.classpath}"/>
+	</target>
+	
+	<target name="init" description="to create necessary directory" depends="info">
+		<delete dir="${j-diamond-base.dir.dist}"/>
+		<mkdir dir="${j-diamond-base.dir.dist}"/>
+		<mkdir dir="${j-diamond-base.dir.dist.lib}"/>
+	</target>
+	
+	<target name="compile" description="compile java artifact" depends="init">
+		<echo message="compiling starts"/>
+		<tstamp>
+			<format property="timestamp.compile.start" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+		</tstamp>
+		<echo message="${timestamp.compile.start}"/>
+		<javac srcdir="${j-diamond-base.dir.src}"
+				destdir="${j-diamond-base.dir.bin}"
+				classpath="${j-diamond-base.lib.classpath}"
+				fork="true"
+				debug="true"
+				debuglevel="lines,vars,source">
+		</javac>
+		<echo message="compiling completed"/>
+		<jar destfile="${j-diamond-base.dir.dist.lib}/${j-diamond-base.dist.filename}.jar">
+			<fileset dir="${j-diamond-base.dir.bin}"/>
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Package-Time" value="${timestamp.package.start}"/>
+				<attribute name="Version" value="${j-diamond-base.version}"/>
+			</manifest>
+		</jar>
+		<tstamp>
+			<format property="timestamp.compile.complete" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+		</tstamp>
+		<echo message="${timestamp.compile.complete}"/>
+	</target>
+	
+	<target name="package" description="to create packaged archive(jar)" depends="compile">
+		<echo message="Packaging Starts.."/>
+		<tstamp>
+			<format property="timestamp.package.start" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+			<format property="timestamp.package.filesuffix" pattern="yyyyMMdd-hhmmss"/>
+		</tstamp>
+		<echo message="${timestamp.package.start}"/>
+
+		<copy todir="${j-diamond-base.dir.dist.lib}">
+			<fileset dir="${j-diamond-base.dir.lib}"/>
+		</copy>
+
+		<echo message="Packaging Completed"/>
+		<tstamp>
+			<format property="timestamp.package.complete" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+		</tstamp>
+		<echo message="${timestamp.package.complete}"/>
+	</target>
+	
+	<target name="cleanup" description="to remove all transient dir" depends="package">
+		<echo message="removing bin directory"/>
+		<delete dir="${j-diamond-base.dir.bin}"/>
+	</target>
+	
+	<target name="build" description="act as an anchor target only" depends="package">
+		<echo message="build complete!"/>
+	</target>
+</project>

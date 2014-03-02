@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== -->
+<!-- Revision History														-->
+<!-- Author          Revision Date  Revision Description                    -->
+<!-- =============== ============== ========================================-->
+<!-- Adelwin Handoyo Nov 13, 2013   Initial draft                           -->
+<!--                                                                        -->
+
+<project name = "JDiamond-Web" default = "build" basedir = "../">
+	<property name="j-diamond-web.version"			value="1.0"/>
+	<property name="j-diamond-web.dir.base"			value="${basedir}"/>
+	<property name="j-diamond-web.dir.src"			value="${j-diamond-web.dir.base}/src"/>
+	<property name="j-diamond-web.dir.cfg"			value="${j-diamond-web.dir.base}/cfg"/>
+	<property name="j-diamond-web.dir.lib"			value="${j-diamond-web.dir.base}/WebContent/WEB-INF/lib"/>
+	<property name="j-diamond-web.dir.bin"			value="${j-diamond-web.dir.base}/WebContent/WEB-INF/classes"/>
+	<property name="j-diamond-web.dir.dist"			value="${j-diamond-web.dir.base}/WebContent/WEB-INF"/>
+	<property name="j-diamond-web.dir.dist.lib"		value="${j-diamond-web.dir.dist}/lib"/>
+	<property name="j-diamond-web.dist.filename"	value="j-diamond-web-${j-diamond-web.version}"/>
+	
+	<property name="j-diamond-web.parent"			value="${basedir}/../"/>
+	<property name="j-diamond-web.base"				value="${j-diamond-web.parent}/diamond-10-base/dist/lib/j-diamond-base-1.0.jar"/>
+	<property name="j-diamond-web.task"				value="${j-diamond-web.parent}/diamond-30-task/dist/lib/j-diamond-task-1.0.jar"/>
+	<property name="j-diamond-web.mail"				value="${j-diamond-web.parent}/diamond-40-mail/dist/lib/j-diamond-mail-1.0.jar"/>
+
+	<property name="j-diamond-web.lib.activation"	value="${j-diamond-web.dir.lib}/activation-1.1.jar"/>
+	<property name="j-diamond-web.lib.aopalliance"	value="${j-diamond-web.dir.lib}/aopalliance-1.0.jar"/>
+	<property name="j-diamond-web.lib.aspectj"		value="${j-diamond-web.dir.lib}/aspectjweaver-1.6.8.jar"/>
+	<property name="j-diamond-web.lib.freemarker"	value="${j-diamond-web.dir.lib}/freemarker-2.3.16.jar"/>
+	<property name="j-diamond-web.lib.javassist"	value="${j-diamond-web.dir.lib}/javassist-3.8.0.GA.jar"/>
+	<property name="j-diamond-web.lib.ognl"			value="${j-diamond-web.dir.lib}/ognl-3.0.jar"/>
+	<property name="j-diamond-web.lib.misc"			value="${j-diamond-web.lib.activation}:${j-diamond-web.lib.aopalliance}:${j-diamond-web.lib.aspectj}:${j-diamond-web.lib.freemarker}:${j-diamond-web.lib.javassist}:${j-diamond-web.lib.ognl}"/>
+
+	<property name="j-diamond-web.lib.mybatis"		value="${j-diamond-web.dir.lib}/mybatis-3.0.4.jar:${j-diamond-web.dir.lib}/mybatis-spring-1.0.0-RC3.jar"/>
+	<property name="j-diamond-web.lib.mail"			value="${j-diamond-web.dir.lib}/mail-1.4.1.jar"/>
+	<property name="j-diamond-web.lib.commons"		value="${j-diamond-web.dir.lib}/commons-codec-1.9.jar:${j-diamond-web.dir.lib}/commons-fileupload-1.2.1.jar:${j-diamond-web.dir.lib}/commons-io-1.3.2.jar:${j-diamond-web.dir.lib}/commons-logging-1.1.1.jar"/>
+	<property name="j-diamond-web.lib.log4j"		value="${j-diamond-web.dir.lib}/log4j-1.2.17.jar"/>
+	<property name="j-diamond-web.lib.jdbc"			value="${j-diamond-web.dir.lib}/mysql-connector-java-5.1.15.jar"/>
+	<property name="j-diamond-web.lib.struts"		value="${j-diamond-web.dir.lib}/struts2-core-2.2.1.jar:${j-diamond-web.dir.lib}/xwork-core-2.2.1.jar"/>
+	<property name="j-diamond-web.lib.spring"		value="${j-diamond-web.dir.lib}/spring-aop-3.0.5.RELEASE.jar:${j-diamond-web.dir.lib}/spring-asm-3.0.5.RELEASE.jar:${j-diamond-web.dir.lib}/spring-beans-3.0.5.RELEASE.jar:${j-diamond-web.dir.lib}/spring-context-3.0.5.RELEASE.jar:${j-diamond-web.dir.lib}/spring-core-3.0.5.RELEASE.jar:${j-diamond-web.dir.lib}/spring-expression-3.0.5.RELEASE.jar:${j-diamond-web.dir.lib}/spring-jdbc-3.0.5.RELEASE.jar:${j-diamond-web.dir.lib}/spring-tx-3.0.5.RELEASE.jar:${j-diamond-web.dir.lib}/spring-web-3.0.5.RELEASE.jar"/>
+	
+	<property name="j-diamond-web.base.lib"			value="${j-diamond-web.base}:${j-diamond-web.task}:${j-diamond-web.mail}"/>
+
+	<property name="j-diamond-web.lib.classpath"	value="${j-diamond-web.lib.misc}:${j-diamond-web.lib.jdbc}:${j-diamond-web.lib.commons}:${j-diamond-web.lib.mail}:${j-diamond-web.lib.log4j}:${j-diamond-web.lib.spring}:${j-diamond-web.lib.mybatis}:${j-diamond-web.lib.struts}:${j-diamond-web.base.lib}"/>
+	
+	<target name="info" description="to print out all property value">
+		<echo message="Property Info.."/>
+		<echo message="j-diamond-web.dir.base      :: ${j-diamond-web.dir.base}"/>
+		<echo message="j-diamond-web.dir.src       :: ${j-diamond-web.dir.src}"/>
+		<echo message="j-diamond-web.dir.cfg       :: ${j-diamond-web.dir.cfg}"/>
+		<echo message="j-diamond-web.dir.lib       :: ${j-diamond-web.dir.lib}"/>
+		<echo message="j-diamond-web.dir.bin       :: ${j-diamond-web.dir.bin}"/>
+		<echo message="j-diamond-web.dist.filename :: ${j-diamond-web.dist.filename}"/>
+		<echo message="j-diamond-web.lib.classpath :: ${j-diamond-web.lib.classpath}"/>
+	</target>
+	
+	<target name="init" description="to create necessary directory" depends="info">
+		<delete dir="${j-diamond-web.dir.bin}"/>
+		<mkdir dir="${j-diamond-web.dir.bin}"/>
+	</target>
+	
+	<target name="child-dependency" description="to get the base project dependency" depends="info">
+		<copy todir="${j-diamond-web.dir.dist.lib}">
+			<fileset file="${j-diamond-web.base}">
+			</fileset>
+		</copy>
+		<copy todir="${j-diamond-web.dir.dist.lib}">
+			<fileset file="${j-diamond-web.task}">
+			</fileset>
+		</copy>
+		<copy todir="${j-diamond-web.dir.dist.lib}">
+			<fileset file="${j-diamond-web.mail}">
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="compile" description="compile java artifact" depends="child-dependency">
+		<echo message="compiling starts"/>
+		<tstamp>
+			<format property="timestamp.compile.start" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+		</tstamp>
+		<echo message="${timestamp.compile.start}"/>
+		<javac srcdir="${j-diamond-web.dir.src}"
+				destdir="${j-diamond-web.dir.bin}"
+				classpath="${j-diamond-web.lib.classpath}"
+				fork="true"
+				debug="true"
+				debuglevel="lines,vars,source">
+		</javac>
+		<echo message="compiling completed"/>
+		<tstamp>
+			<format property="timestamp.compile.complete" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+		</tstamp>
+		<echo message="${timestamp.compile.complete}"/>
+	</target>
+	
+	<target name="package" description="to create packaged archive(jar)" depends="compile">
+		<echo message="Packaging Starts.."/>
+		<tstamp>
+			<format property="timestamp.package.start" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+			<format property="timestamp.package.filesuffix" pattern="yyyyMMdd-hhmmss"/>
+		</tstamp>
+		<echo message="${timestamp.package.start}"/>
+
+		<jar destfile="${j-diamond-web.dir.dist.lib}/${j-diamond-web.dist.filename}.jar">
+			<fileset dir="${j-diamond-web.dir.bin}"/>
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Package-Time" value="${timestamp.package.start}"/>
+				<attribute name="Version" value="${j-diamond-web.version}"/>
+			</manifest>
+		</jar>
+
+		<echo message="Packaging Completed"/>
+		<tstamp>
+			<format property="timestamp.package.complete" pattern="dd-MM-yyyy hh:mm:ss:SS aa"/>
+		</tstamp>
+		<echo message="${timestamp.package.complete}"/>
+	</target>
+	
+	<target name="cleanup" description="to remove all transient dir" depends="package">
+		<echo message="removing bin directory"/>
+		<delete dir="${j-diamond-web.dir.bin}"/>
+	</target>
+	
+	<target name="build" description="act as an anchor target only" depends="compile">
+		<echo message="build complete!"/>
+	</target>
+</project>
