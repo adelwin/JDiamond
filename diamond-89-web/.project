@@ -3,6 +3,9 @@
 	<name>diamond-89-web</name>
 	<comment></comment>
 	<projects>
+		<project>diamond-10-base</project>
+		<project>diamond-30-task</project>
+		<project>diamond-40-mail</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
