@@ -26,7 +26,15 @@ public abstract class BaseAction extends ActionSupport {
 		logger.debug("PreAction Completed");
 		
 		logger.debug("Executing main action method");
-		String originalActionResult = this.action();
+		String originalActionResult = null;
+		try {
+			originalActionResult = this.action();
+		} catch (Exception e) {
+			logger.debug("Exception was thrown from inside the action() method");
+			this.addActionError("An Error has occurred, for details of the error, please contact your system administrator");
+			this.addActionError("Error Code : " + System.currentTimeMillis());
+			this.addActionError(e.getMessage());
+		}
 		logger.debug("Main Action Method completed, Original Result = " + originalActionResult);
 		
 		logger.debug("Executing Post Action method");
@@ -34,7 +42,7 @@ public abstract class BaseAction extends ActionSupport {
 		logger.debug("Post Action Method completed, Result = " + finalResult);
 		
 		logger.debug("returning final result");
-		return finalResult;
+		return (finalResult == null ? BaseAction.ERROR : finalResult);
 	}
 	
 	public void preAction() throws BaseActionException {

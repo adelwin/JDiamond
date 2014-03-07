@@ -22,4 +22,10 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
 		<property name="modelClass" value="org.si.diamond.web.model.LookupModel"/>
 	</bean>
+
+	<bean id="IUserDao" class="org.si.diamond.base.dao.impl.BaseDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		<property name="modelClass" value="org.si.diamond.web.model.UserModel"/>
+	</bean>
+
 </beans>

@@ -4,5 +4,6 @@
 <configuration>
 	<mappers>
 		<mapper resource="mappers/DiamondCoreLookups.xml"/>
+		<mapper resource="mappers/DiamondCoreUsers.xml"/>
 	</mappers>
 </configuration>

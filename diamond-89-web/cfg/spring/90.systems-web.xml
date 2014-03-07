@@ -16,6 +16,7 @@
 	
 	<bean id="HelloAction" class="org.si.diamond.web.action.HelloAction" scope="prototype">
 		<property name="lookupService" ref="ILookupService"/>
+		<property name="userService" ref="IUserService"/>
 	</bean>
 
 </beans>

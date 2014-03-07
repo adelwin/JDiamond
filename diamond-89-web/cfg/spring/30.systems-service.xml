@@ -19,6 +19,10 @@
 	<bean id="ILookupService" class="org.si.diamond.web.service.impl.LookupServiceImpl">
 		<property name="lookupDao" ref="ILookupDao"/>
 	</bean>
+
+	<bean id="IUserService" class="org.si.diamond.web.service.impl.UserServiceImpl">
+		<property name="userDao" ref="IUserDao"/>
+	</bean>
 	
 	<!-- 
 	<bean id="ITransactionService" class="org.si.diamond.web.service.impl.TransactionServiceImpl">

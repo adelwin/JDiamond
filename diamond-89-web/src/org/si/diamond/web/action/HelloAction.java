@@ -18,7 +18,9 @@ import org.si.diamond.base.action.BaseAction;
 import org.si.diamond.base.exception.BaseActionException;
 import org.si.diamond.base.exception.BaseServiceException;
 import org.si.diamond.web.model.LookupModel;
+import org.si.diamond.web.model.UserModel;
 import org.si.diamond.web.service.ILookupService;
+import org.si.diamond.web.service.IUserService;
 
 /**
  * Type Name : HelloAction Package : sme-web Author : adelwin.handoyo Created :
@@ -29,7 +31,35 @@ public class HelloAction extends BaseAction {
 	private static final long serialVersionUID = 6507175604288282118L;
 	protected Logger logger = Logger.getLogger(HelloAction.class);
 	private ILookupService lookupService;
+	private IUserService userService;
 	
+	private String name;
+	private LookupModel lookup;
+	
+	public LookupModel getLookup() {
+		return lookup;
+	}
+
+	public void setLookup(LookupModel lookup) {
+		this.lookup = lookup;
+	}
+
+	public IUserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(IUserService userService) {
+		this.userService = userService;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public ILookupService getLookupService() {
 		return lookupService;
 	}
@@ -43,7 +73,17 @@ public class HelloAction extends BaseAction {
 		try {
 			logger.debug("on action method of hello action");
 			List<LookupModel> lookups = lookupService.getLookupByType("");
-			logger.error(lookups);
+			logger.debug(lookups);
+			
+			logger.debug("name is " + this.name);
+			this.lookup = lookups.get(0);
+			
+			List<UserModel> userList = this.userService.getUserByName("Adelwin");
+			logger.debug("user id is " + userList.get(0).getUserId());
+			
+			if (userList.get(0).getUserId().equals("8")) {
+				throw new BaseActionException("test");
+			}
 		} catch (BaseServiceException e) {
 			logger.error(e.getMessage(), e);
 			throw new BaseActionException(e.getMessage(), e);
