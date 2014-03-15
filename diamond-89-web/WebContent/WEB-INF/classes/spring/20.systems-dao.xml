@@ -28,4 +28,9 @@
 		<property name="modelClass" value="org.si.diamond.web.model.UserModel"/>
 	</bean>
 
+	<bean id="IUserRoleDao" class="org.si.diamond.base.dao.impl.BaseDaoImpl">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		<property name="modelClass" value="org.si.diamond.web.model.UserRoleModel"/>
+	</bean>
+
 </beans>

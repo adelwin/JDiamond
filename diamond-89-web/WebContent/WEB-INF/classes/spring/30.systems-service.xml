@@ -23,6 +23,10 @@
 	<bean id="IUserService" class="org.si.diamond.web.service.impl.UserServiceImpl">
 		<property name="userDao" ref="IUserDao"/>
 	</bean>
+
+	<bean id="IUserRoleService" class="org.si.diamond.web.service.impl.UserRoleServiceImpl">
+		<property name="userRoleDao" ref="IUserRoleDao"/>
+	</bean>
 	
 	<!-- 
 	<bean id="ITransactionService" class="org.si.diamond.web.service.impl.TransactionServiceImpl">

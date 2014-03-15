@@ -98,7 +98,7 @@ public class BaseDaoImpl<ID extends Serializable, M extends BaseModel> extends S
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<M> customSelect(M criterion, String queryName) throws BaseDaoException {
-		return this.getSqlSession().selectList(queryName, criterion);
+		return this.getSqlSession().selectList(this.getModelClassName().append("." + queryName).toString(), criterion);
 	}
 
 	/* (non-Javadoc)
@@ -106,6 +106,6 @@ public class BaseDaoImpl<ID extends Serializable, M extends BaseModel> extends S
 	 */
 	@Override
 	public int customExecute(M criterion, String queryName) throws BaseDaoException {
-		return this.getSqlSession().update(queryName, criterion);
+		return this.getSqlSession().update(this.getModelClassName().append("." + queryName).toString(), criterion);
 	}
 }

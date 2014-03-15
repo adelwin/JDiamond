@@ -54,6 +54,13 @@
 		</where>
 	</select>
 
+	<select id="getByRole" resultMap="rUserModel">
+		<include refid="base_select_user_model"/>
+		<where>
+			user_role_id = #{userRoleId}
+		</where>
+	</select>
+
 	<select id="getByCriteria" resultMap="rUserModel">
 		<include refid="base_select_user_model"/>
 		<where>

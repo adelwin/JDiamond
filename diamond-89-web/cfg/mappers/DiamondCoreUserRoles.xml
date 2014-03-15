@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.si.diamond.web.model.UserModel">
+<mapper namespace="org.si.diamond.web.model.UserRoleModel">
 
-	<resultMap type="org.si.diamond.web.model.UserModel" id="rUserModel">
-		<result property="userId"		column="user_id"		/>
-		<result property="userCode"		column="user_code"		/>
-		<result property="userName"		column="user_name"		/>
+	<resultMap type="org.si.diamond.web.model.UserRoleModel" id="rUserRoleModel">
 		<result property="userRoleId"	column="user_role_id"	/>
-		<result property="supervisorId"	column="supervisor_id"	/>
-		<result property="userStatus"	column="user_status"	/>
+		<result property="userRoleName"	column="user_role_name"	/>
+		<result property="loginLevel"	column="login_level"	/>
 		<result property="attr1"		column="attr1"			/>
 		<result property="attr2"		column="attr2"			/>
 		<result property="attr3"		column="attr3"			/>
@@ -21,13 +18,10 @@
 		<result property="status"		column="status"			/>
 	</resultMap>
 	
-	<sql id="base_select_user_model">
-		SELECT user_id,
-		       user_code,
-		       user_name,
-		       user_role_id,
-		       supervisor_id,
-		       user_status,
+	<sql id="base_select_user_role_model">
+		SELECT user_role_id,
+		       user_role_name,
+		       login_level
 		       attr1,
 		       attr2,
 		       attr3,
@@ -37,50 +31,34 @@
 		       update_by,
 		       update_date,
 		       status
-		  FROM diamond_core_users
+		  FROM diamond_core_user_roles
 	</sql>
 	
-	<select id="getById" resultMap="rUserModel">
-		<include refid="base_select_user_model"/>
-		<where>
-			user_id = #{userId}
-		</where>
-	</select>
-
-	<select id="getByCode" resultMap="rUserModel">
-		<include refid="base_select_user_model"/>
-		<where>
-			user_code = #{userCode}
-		</where>
-	</select>
-
-	<select id="getByRole" resultMap="rUserModel">
-		<include refid="base_select_user_model"/>
+	<select id="getById" resultMap="rUserRoleModel">
+		<include refid="base_select_user_role_model"/>
 		<where>
 			user_role_id = #{userRoleId}
 		</where>
 	</select>
 
-	<select id="getByCriteria" resultMap="rUserModel">
-		<include refid="base_select_user_model"/>
+	<select id="getByName" resultMap="rUserRoleModel">
+		<include refid="base_select_user_role_model"/>
 		<where>
-			<if test="userId != null">
-				user_id = #{userId}
-			</if>
-			<if test="userCode != null">
-				AND user_code = #{userCode}
-			</if>
-			<if test="userName != null">
-				AND user_name LIKE #{userName}
-			</if>
+			user_role_name = #{userRoleName}
+		</where>
+	</select>
+
+	<select id="getByCriteria" resultMap="rUserRoleModel">
+		<include refid="base_select_user_role_model"/>
+		<where>
 			<if test="userRoleId != null">
-				AND user_role_id = #{userRoleId}
+				user_role_id = #{userRoleId}
 			</if>
-			<if test="supervisorId != null">
-				AND supervisor_id = #{supervisorId}
+			<if test="userRoleName != null">
+				AND user_role_name = #{userRoleName}
 			</if>
-			<if test="userStatus != null">
-				AND user_status = #{userStatus}
+			<if test="loginLevel != null">
+				AND login_level LIKE #{loginLevel}
 			</if>
 			<if test="attr1 != null">
 				AND attr1 = #{attr1}
@@ -112,8 +90,8 @@
 		</where>
 	</select>
 	
-	<select id="listAll" resultMap="rUserModel">
-		<include refid="base_select_user_model"/>
+	<select id="listAll" resultMap="rUserRoleModel">
+		<include refid="base_select_user_role_model"/>
 	</select>
 
 </mapper>
